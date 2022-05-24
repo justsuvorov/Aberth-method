@@ -4,12 +4,78 @@
 #include <cmath>
 using namespace std;
 
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+class Root
+{
+
+private:
+
+	int _n; // Degree of Polynom
+	double coef[_n+1]; //Coefficients
+    Complex _p[_n]; //Roots	
+
+public:
+	//Конструктор класса
+	Root() {
+		_n = 0;
+		coef[0] = 0;
+	}
+	void InputDegree() {
+		int number;
+ 		cout << "Input degree of polynom\n";
+ 		while ( !(cin >> number) )
+		{
+			cin.clear();
+			while ( cin.get() != '\n' ) ;
+ 			cout << "Not integer: ";
+		}
+ 
+		cout << "Degree is " << number << endl;
+		_n = number;
+		double coef[_n];
+		getchar();
+		getchar();
+    }
+	void Coefficients() {
+		cout << "Input coefficients\n";
+        for (i = 0; i < (_n+1); i++) {
+			cin >> coef[i];
+		}
+    }
+	
+
+	void Find_Roots() {
+	
+      int i, j, count, Root;
+
+      Complex p1[_n], Z0, Z;
+      count = 0;
+      Root = 0;
+
+       while (count < 120) {
+           count = count + 1;
+           for (i = 0; i < _n; i++) {
+           Z0 = Complex(0);
+            for (j = 0; j < n; j++) {
+                if (j != i) Z0 = Add(Z0, Division(Complex(1), Add(Difference(p1[i],p1[j]), Complex(0.000001))));
+            }
+           Z = Division(Polynom( p1[i]), Difference(Cross(Polynom(p1[i]), Z0), D_Polynom(p1[i])));
+        p1[i] = Add(p1[i], Z);
+        if (p1[i].Real() > 0)  p1[i] = Complex (-1 * p1[i].Real(), p1[i].Real());
+           }
+       }
+       for (i = 0; i < _n; i++) {
+           p[i] = p1[i];
+       }
+      
+	}
+}
+
 //Описание класса комплексных чисел
 class Complex
 {
 private:
     double _re, _im;
-	
 public:
     Complex() {
         double x, y;
@@ -57,53 +123,44 @@ public:
     double  ImPower(int n) {
         return pow(Modul(), n) * sin(n * Argument());
     }
-	Complex Division(Complex p1, Complex p2) {
+	//Частное комплексных чисел
+Complex Division(Complex p1, Complex p2) {
     double re, im;
     re = (p1.Real() * p2.Real() + p1.Imag() * p2.Imag()) / (pow(p2.Real(), 2) + pow(p2.Imag(), 2));
     im = (p1.Imag() * p2.Real() - p1.Real() * p2.Imag()) / (pow(p2.Real(), 2) + pow(p2.Imag(), 2));
     return Complex(re, im);
-	}
+}
 //Сложение комплексных чисел
-	Complex Add(Complex p1, Complex p2) {
+Complex Add(Complex p1, Complex p2) {
     double re, im;
     re = p1.Real() + p2.Real();
     im = p1.Imag() + p2.Imag();
     return Complex(re, im);
-	}
+}
 // Разность комплексных чисел
-	Complex Difference(Complex p1, Complex p2) {
+Complex Difference(Complex p1, Complex p2) {
     double re, im;
     re = p1.Real() - p2.Real();
     im = p1.Imag() - p2.Imag();
     return Complex(re, im);
-	}
+}
 //Умножение комплексных чисел
 Complex Cross(Complex p1, Complex p2) {
     double re, im;
     re = p1.Real() * p2.Real() - p1.Imag() * p2.Imag();
     im = p1.Real() * p2.Imag() + p1.Imag() * p2.Real();
     return Complex(re, im);
-	}
-void Find_Poles(int n) {
-	int i, j, count, Root;
-
-    Complex p[n], Z0, Z;
-    count = 0;
-    Root = 0;
-
-    while (count < 120) {
-        count = count + 1;
-        for (i = 0; i < n; i++) {
-           Z0 = Complex(0);
-            for (j = 0; j < n+1; j++) {
-                if (j != i) Z0 = Add(Z0, Division(Complex(1), Add(Difference(p[i],p[j]), Complex(0.000001))));
-            }
-           Z = Division(Polynom(p[i]), Difference(Cross(Polynom(p[i]), Z0), D_Polynom(p[i])));
-			p[i] = Add(p[i], Z);
-			if (p[i].Real() > 0)  p[i] = Complex (-1 * p[i].Real(), p[i].Real());
-           }
-       }
-
-      }
-	
+}
+double ModulP(double re, double im) {
+    return pow(re * re + im * im, 0.5);
+}
 };
+
+
+
+
+
+
+
+
+
